@@ -1,14 +1,12 @@
 <x-app-layout x-data="{ modalOpen: {{old('_token') ? 'true' : 'false'}} }"
               class="max-w-7xl mx-auto px-4 relative">
 
-    <div
-        class="grid grid-cols-[repeat(auto-fill,_10rem)] gap-4 my-4 ">
+    <div class="grid justify-items-center grid-cols-[repeat(auto-fill,minmax(10rem,_1fr))] py-4 ">
         @foreach($actors as $actor)
             <a href="{{route('actor.show', $actor->id)}}"
-               class="flex flex-col w-40 p-2 hover:bg-primary-50 rounded-lg">
-                <img
-                    class="rounded-md bg-[url('{{config('app.url')}}/images/avatar.webp')] bg-cover w-40 aspect-square"
-                    src="{{Storage::temporaryUrl($actor->avatar_path, now()->addHour(1))}}">
+               class="flex flex-col w-40 p-2 m-4 hover:bg-primary-50 rounded-lg">
+                <img class="rounded-md bg-[url('{{config('app.url')}}/images/avatar.webp')] bg-cover w-40 aspect-square"
+                     src="{{Storage::temporaryUrl($actor->avatar_path, now()->addHour(1))}}">
                 <h3 class="text-center text-lg mt-2">{{$actor->name}}</h3>
             </a>
         @endforeach
