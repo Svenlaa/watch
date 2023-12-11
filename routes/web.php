@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\ActorController;
 use App\Http\Controllers\ProfileController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,18 +16,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', function (Request $request) {
+    if (Auth::check()) {
+        return to_route('home');
+    }
+
+    return to_route('welcome');
 });
 
-Route::get('/dash', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/welcome', function (Request $request) {
+    return view('welcome');
+})->name('welcome');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// Authed Routes
+Route::group(['middleware' => ['auth', 'verified']], function () {
+    Route::get('/home', fn () => view('dashboard'))->name('home');
+
+    Route::group([], function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
+
+    Route::group(['as' => 'actor', 'prefix' => '/actors', 'controller' => ActorController::class], function () {
+        Route::get('/', 'index');
+        Route::get('/{actor}', 'show')->name('.show');
+        Route::post('/create', 'create')->name('.create');
+    });
 });
 
 require __DIR__.'/auth.php';

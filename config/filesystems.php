@@ -51,8 +51,6 @@ return [
             'bucket' => env('R2_BUCKET'),
             'endpoint' => env('R2_ENDPOINT'),
             'region' => 'auto',
-            'public' => env('R2_PUBLIC'),
-
             'throw' => false,
         ],
 
