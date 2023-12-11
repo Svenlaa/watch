@@ -12,8 +12,9 @@
         @endforeach
     </div>
 
-    <button @click="modalOpen = !modalOpen" title="Create New Actor" type="button"
-            class="fixed bottom-8 right-12 bg-primary-600 hover:bg-primary-700 rounded-full text-white font-bold text-3xl p-2 leading-4">
+    <button @click="modalOpen = !modalOpen; $nextTick(() => $(`input[name='name']`).focus())"
+            class="fixed bottom-8 right-12 bg-primary-600 hover:bg-primary-700 rounded-full text-white font-bold text-3xl p-2 leading-4"
+            title="Create New Actor" type="button">
         <iconify-icon icon="streamline:add-1-solid"/>
     </button>
 
@@ -28,11 +29,14 @@
                 <form method="POST" action="{{route('actor.create')}}" enctype="multipart/form-data">
                     @csrf
                     <div class="shadow overflow-hidden rounded-lg">
-                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                        <div class="bg-gray-50 pt-2 pb-1 px-4">
+                            <h2 id="modal-headline" class="text-lg">Add Actor</h2>
+                        </div>
+                        <div class="bg-white px-4 py-4 sm:p-6 sm:pb-4">
 
                             <div class="mt-4 first:mt-0">
                                 <label for="inputName" class="block text-sm font-medium text-gray-700">Name:</label>
-                                <input type="text" id="inputName" name="name" value="{{old('name') ?? ''}}"
+                                <input type="text" name="name" value="{{old('name') ?? ''}}"
                                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md @error('name') border-red-500 @enderror">
                                 @error('name')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
                             </div>
@@ -44,12 +48,15 @@
                                 @error('avatar')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
                             </div>
                         </div>
-                        <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse sm:gap-4">
+                        <div class="bg-gray-50 py-3 px-4 flex flex-row-reverse gap-4">
                             <button type="submit"
                                     class="bg-primary-600 text-white rounded-sm px-2 py-1 hover:bg-primary-700">
                                 Create Actor
                             </button>
-                            <button @click="modalOpen = false" type="button" class="btn btn-secondary">Close</button>
+                            <button type="button" @click="modalOpen = false"
+                                    class="rounded-sm px-2 py-1 hover:bg-gray-100">
+                                Close
+                            </button>
                         </div>
                     </div>
                 </form>
