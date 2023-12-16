@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActorController;
+use App\Http\Controllers\ActorLinkController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,10 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/', 'index');
         Route::get('/{actor}', 'show')->name('.show');
         Route::post('/create', 'create')->name('.create');
+
+        Route::group(['as' => '.links', 'prefix' => '/{actor}/links', 'controller' => ActorLinkController::class], function () {
+            Route::post('/', [ActorLinkController::class, 'store'])->name('.store');
+        });
     });
 });
 
