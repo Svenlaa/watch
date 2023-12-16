@@ -19,8 +19,6 @@ class ActorController extends Controller
 
     public function show(Request $request, Actor $actor)
     {
-        return to_route('actor');
-
         return view('actors.show', compact('actor'));
     }
 
