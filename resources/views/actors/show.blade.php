@@ -10,7 +10,7 @@
             <div
                 class="w-100 flex flex-row gap-2 py-2 justify-center leading-[1ch] text-center text-lg font-extrabold text-[#fffd]">
                 @foreach($actor->actorLinks as $link)
-                    <a href="{{$link->target}}" title="{{$link->name}}"
+                    <a href="{{$link->target}}" title="{{$link->name}}" target="_blank"
                        style="background-color: {{$link->background_color_hex}}"
                        class="rounded-sm p-[0.25ch] w-[1.5ch] h-[1.5ch]">{{$link->letter}}</a>
                 @endforeach
