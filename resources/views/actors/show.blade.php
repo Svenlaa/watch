@@ -6,10 +6,18 @@
             <img src="{{Storage::temporaryUrl($actor->avatar_path, now()->addHour(1))}}"
                  class="rounded-xl bg-[url('{{config('app.url')}}/images/avatar.webp')]"/>
             <h2 class="text-center pt-4 text-2xl font-medium">{{$actor->name}}</h2>
+
             <div
-                class="w-100 flex flex-row gap-2 py-2 justify-center leading-[1ch] text-center text-lg font-extrabold text-white">
+                class="w-100 flex flex-row gap-2 py-2 justify-center leading-[1ch] text-center text-lg font-extrabold text-[#fffd]">
+                @foreach($actor->actorLinks as $link)
+                    <a href="{{$link->target}}" title="{{$link->name}}"
+                       style="background-color: {{$link->background_color_hex}}"
+                       class="rounded-sm p-[0.25ch] w-[1.5ch] h-[1.5ch]">{{$link->letter}}</a>
+                @endforeach
                 <button @click="modalOpen = !modalOpen; $nextTick(() => $(`input[name='name']`).focus())"
-                        class="bg-black rounded-sm p-[0.25ch] w-[1.5ch] h-[1.5ch]" title="Create Actor Link">+
+                        class="bg-[#0003] text-black rounded-sm p-[0.25ch] w-[1.8ch] h-[1.5ch]"
+                        title="Create Actor Link">
+                    +
                 </button>
             </div>
 
