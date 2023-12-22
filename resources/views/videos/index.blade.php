@@ -13,9 +13,9 @@
         @endforeach
     </div>
 
-    <button @click="modalOpen = !modalOpen; $nextTick(() => $(`input[name='name']`).focus())"
+    <button @click="modalOpen = !modalOpen; $nextTick(() => $(`input[name='title']`).focus())"
             class="fixed bottom-8 right-12 bg-primary-600 hover:bg-primary-700 rounded-full text-white font-bold text-3xl p-2 leading-4"
-            title="Create New Actor" type="button">
+            title="Create New Video" type="button">
         <iconify-icon icon="streamline:add-1-solid"/>
     </button>
 
@@ -44,7 +44,7 @@
 
                             <div class="mt-4 first:mt-0">
                                 <label for="releaseDateInput"
-                                       class="block text-sm font-medium text-gray-700">Title:</label>
+                                       class="block text-sm font-medium text-gray-700">Release Date:</label>
                                 <input id="releaseDateInput" type="date" name="release_date"
                                        value="{{old('release_date') ?? ''}}"
                                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md @error('release_date') border-red-500 @enderror">
