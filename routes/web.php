@@ -3,6 +3,7 @@
 use App\Http\Controllers\ActorController;
 use App\Http\Controllers\ActorLinkController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +48,12 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::group(['as' => '.links', 'prefix' => '/{actor}/links', 'controller' => ActorLinkController::class], function () {
             Route::post('/', [ActorLinkController::class, 'store'])->name('.store');
         });
+    });
+
+    Route::group(['as' => 'video', 'prefix' => '/videos', 'controller' => VideoController::class], function () {
+        Route::get('/', 'index');
+        Route::get('/{video}', 'show')->name('.show');
+        Route::post('/create', 'create')->name('.create');
     });
 });
 
