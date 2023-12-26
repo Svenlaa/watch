@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Creator;
 use App\Models\Video;
-use App\Models\VideoSource;
+use App\Models\VideoVersion;
 use getID3;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -23,7 +23,7 @@ class VideoController extends Controller
 
     public function show(Request $request, Video $video, ?string $language = null)
     {
-        $source = $video->getVideoSource($language);
+        $source = $video->getVideoVersion($language);
         if (! $source) {
             return to_route('video.show', compact('video'));
         }
@@ -58,7 +58,7 @@ class VideoController extends Controller
 
         $videoPath = Storage::put('videos', $validated['video']);
 
-        $videoSource = new VideoSource();
+        $videoSource = new VideoVersion();
         $videoSource->video_id = $video->id;
         $videoSource->language = $video->language;
         $videoSource->source_path = $videoPath;

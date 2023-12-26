@@ -19,13 +19,13 @@ class Video extends Model
         return $this->belongsTo(Creator::class);
     }
 
-    public function videoSources(): HasMany
+    public function videoVersions(): HasMany
     {
-        return $this->hasMany(VideoSource::class, 'video_id');
+        return $this->hasMany(VideoVersion::class, 'video_id');
     }
 
-    public function getVideoSource(?string $language = null): ?VideoSource
+    public function getVideoVersion(?string $language = null): ?VideoVersion
     {
-        return $this->videoSources()->firstWhere('language', $language ?? $this->language);
+        return $this->videoVersions()->firstWhere('language', $language ?? $this->language);
     }
 }
