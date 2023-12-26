@@ -1,7 +1,7 @@
 <x-app-layout x-data="{ modalOpen: {{old('_token') ? 'true' : 'false'}} }"
               class="max-w-7xl mx-auto px-4 relative">
 
-    <div class="grid justify-items-center grid-cols-[repeat(auto-fill,minmax(18rem,_1fr))] py-4 ">
+    <div class="grid justify-items-center grid-cols-[repeat(auto-fill,minmax(18rem,_1fr))] py-4">
         @foreach($videos as $video)
             @php($source = $video->getVideoSource())
             <a href="{{route('video.show', $video->id)}}"

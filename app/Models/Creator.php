@@ -16,5 +16,10 @@ class Creator extends Model
         return $this->hasMany(CreatorLink::class, 'creator_id');
     }
 
+    public function videos(): HasMany
+    {
+        return $this->hasMany(Video::class, 'creator_id');
+    }
+
     protected $visible = ['id', 'name', 'avatar_path'];
 }
