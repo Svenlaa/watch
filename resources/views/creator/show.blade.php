@@ -3,11 +3,8 @@
     <div
         class="flex-none w-full sm:sticky top-0 h-min bg-white sm:w-64 flex flex-col items-center rounded-b-md drop-shadow-md">
         <div class="pt-6 px-8 sticky w-64 rounded-b-md drop-shadow-md">
-            <img src="{{Storage::temporaryUrl($creator->avatar_path, now()->addHour(1))}}"
-                 style="background-image: url('{{config('app.url')}}/images/avatar.webp')"
-                 class="rounded-xl aspect-square bg-cover"/>
+            <x-creator-avatar :path="$creator->avatar_path" :alt="'Avatar for'.$creator->name" class="rounded-xl"/>
             <h2 class="text-center pt-4 text-2xl font-medium">{{$creator->name}}</h2>
-
             <div
                 class="w-100 flex flex-row gap-2 py-2 justify-center leading-[1ch] text-center text-lg font-extrabold text-[#fffd]">
                 @foreach($creator->creatorLinks as $link)

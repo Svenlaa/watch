@@ -24,8 +24,8 @@ class Video extends Model
         return $this->hasMany(VideoSource::class, 'video_id');
     }
 
-    public function getVideoSource(?string $language = null): Model|HasMany|null
+    public function getVideoSource(?string $language = null): ?VideoSource
     {
-        return $this->videoSources()->where('language', $language ?? $this->language)->first();
+        return $this->videoSources()->firstWhere('language', $language ?? $this->language);
     }
 }

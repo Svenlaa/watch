@@ -5,9 +5,8 @@
         @foreach($creators as $creator)
             <a href="{{route('creator.show', $creator->id)}}"
                class="flex flex-col w-40 p-2 m-4 hover:bg-primary-50 rounded-lg">
-                <img class="rounded-md bg-cover w-40 aspect-square"
-                     style="background-image: url('{{config('app.url')}}/images/avatar.webp')"
-                     src="{{Storage::temporaryUrl($creator->avatar_path, now()->addHour(1))}}">
+                <x-creator-avatar :path="$creator->avatar_path" :alt="'Avatar for'.$creator->name"
+                                  class="rounded-md w-40"/>
                 <h3 class="text-center text-lg mt-2">{{$creator->name}}</h3>
             </a>
         @endforeach

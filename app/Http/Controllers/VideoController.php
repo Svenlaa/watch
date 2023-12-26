@@ -21,11 +21,14 @@ class VideoController extends Controller
         return view('videos.index', compact('videos', 'creators'));
     }
 
-    public function show(Request $request, Video $video)
+    public function show(Request $request, Video $video, ?string $language = null)
     {
-        abort(501);
+        $source = $video->getVideoSource($language);
+        if (! $source) {
+            return to_route('video.show', compact('video'));
+        }
 
-        return view('videos.show', compact('video'));
+        return view('videos.show', compact('video', 'source'));
     }
 
     public function create(Request $request)

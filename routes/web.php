@@ -52,7 +52,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::group(['as' => 'video', 'prefix' => '/videos', 'controller' => VideoController::class], function () {
         Route::get('/', 'index');
-        Route::get('/{video}', 'show')->name('.show');
+        Route::get('/{video}/{language?}', 'show')->name('.show');
         Route::post('/create', 'create')->name('.create');
     });
 });
