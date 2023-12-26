@@ -58,13 +58,13 @@ class VideoController extends Controller
 
         $videoPath = Storage::put('videos', $validated['video']);
 
-        $videoSource = new VideoVersion();
-        $videoSource->video_id = $video->id;
-        $videoSource->language = $video->language;
-        $videoSource->source_path = $videoPath;
-        $videoSource->thumbnail_path = $thumbnailPath;
-        $videoSource->duration = (int) $videoInfo['playtime_seconds'];
-        $videoSource->save();
+        $videoVersion = new VideoVersion();
+        $videoVersion->video_id = $video->id;
+        $videoVersion->language = $video->language;
+        $videoVersion->source_path = $videoPath;
+        $videoVersion->thumbnail_path = $thumbnailPath;
+        $videoVersion->duration = (int) $videoInfo['playtime_seconds'];
+        $videoVersion->save();
 
         return redirect()->route('video.show', ['video' => $video->id])->with('success', 'Video created successfully');
     }
