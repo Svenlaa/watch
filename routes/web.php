@@ -3,6 +3,8 @@
 use App\Http\Controllers\CreatorController;
 use App\Http\Controllers\CreatorLinkController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VideoController;
+use App\Http\Controllers\VideoVersionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -47,6 +49,15 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::group(['as' => '.links', 'prefix' => '/{creator}/links', 'controller' => CreatorLinkController::class], function () {
             Route::post('/', [CreatorLinkController::class, 'store'])->name('.store');
         });
+    });
+
+    Route::group(['as' => 'video', 'prefix' => '/videos', 'controller' => VideoController::class], function () {
+        Route::get('/', 'index');
+        Route::get('/{video}/{language?}', 'show')->name('.show');
+        Route::post('/create', 'create')->name('.create');
+
+        // create video version
+        Route::post('/{video}/versions', [VideoVersionController::class, 'create'])->name('.version.create');
     });
 });
 

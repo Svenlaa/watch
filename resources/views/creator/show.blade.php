@@ -3,11 +3,8 @@
     <div
         class="flex-none w-full sm:sticky top-0 h-min bg-white sm:w-64 flex flex-col items-center rounded-b-md drop-shadow-md">
         <div class="pt-6 px-8 sticky w-64 rounded-b-md drop-shadow-md">
-            <img src="{{Storage::temporaryUrl($creator->avatar_path, now()->addHour(1))}}"
-                 style="background-image: url('{{config('app.url')}}/images/avatar.webp')"
-                 class="rounded-xl aspect-square bg-cover"/>
+            <x-creator-avatar :path="$creator->avatar_path" :alt="'Avatar for'.$creator->name" class="rounded-xl"/>
             <h2 class="text-center pt-4 text-2xl font-medium">{{$creator->name}}</h2>
-
             <div
                 class="w-100 flex flex-row gap-2 py-2 justify-center leading-[1ch] text-center text-lg font-extrabold text-[#fffd]">
                 @foreach($creator->creatorLinks as $link)
@@ -24,7 +21,18 @@
 
         </div>
     </div>
-    <div class="w-full"></div>
+    <div class="w-full grid justify-items-center grid-cols-[repeat(auto-fill,minmax(18rem,_1fr))]">
+        @foreach($creator->videos as $video)
+            @php($version = $video->getVideoVersion())
+            <a href="{{route('video.show', $video->id)}}"
+               class="flex flex-col w-72 p-2 m-4 hover:bg-primary-50 rounded-lg">
+                <img style="background-image: url('{{config('app.url')}}/images/thumbnail.webp')"
+                     class="rounded-md bg-cover w-full aspect-video" alt="Thumbnail for {{$video->title}}"
+                     src="{{ $version?->thumbnail_path ? Storage::temporaryUrl($version->thumbnail_path, now()->addHour(1)) : ''}}"/>
+                <h3 class="text-center text-lg mt-2">{{$video->title}}</h3>
+            </a>
+        @endforeach
+    </div>
     <div x-show="modalOpen" style="display: none" class="fixed z-10 inset-0 overflow-y-auto">
         <div class="flex items-center justify-center min-h-screen">
             <div class="fixed inset-0 transition-opacity" aria-hidden="true">
