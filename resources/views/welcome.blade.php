@@ -188,9 +188,11 @@
                 </div>
             </div>
 
-            <div class="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
-                Version <span class="font-mono uppercase tracking-tight">{{config('app.version')}}</span>
-            </div>
+            @if(config('app.version'))
+                <div class="ml-4 text-center text-sm text-gray-500 dark:text-gray-400 sm:text-right sm:ml-0">
+                    Version <span class="font-mono uppercase tracking-tight">{{config('app.version')}}</span>
+                </div>
+            @endif
         </div>
     </div>
 </div>

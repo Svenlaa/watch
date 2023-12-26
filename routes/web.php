@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\ActorController;
-use App\Http\Controllers\ActorLinkController;
+use App\Http\Controllers\CreatorController;
+use App\Http\Controllers\CreatorLinkController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Http\Request;
@@ -40,13 +40,13 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
 
-    Route::group(['as' => 'actor', 'prefix' => '/actors', 'controller' => ActorController::class], function () {
+    Route::group(['as' => 'creator', 'prefix' => '/creators', 'controller' => CreatorController::class], function () {
         Route::get('/', 'index');
-        Route::get('/{actor}', 'show')->name('.show');
+        Route::get('/{creator}', 'show')->name('.show');
         Route::post('/create', 'create')->name('.create');
 
-        Route::group(['as' => '.links', 'prefix' => '/{actor}/links', 'controller' => ActorLinkController::class], function () {
-            Route::post('/', [ActorLinkController::class, 'store'])->name('.store');
+        Route::group(['as' => '.links', 'prefix' => '/{creator}/links', 'controller' => CreatorLinkController::class], function () {
+            Route::post('/', [CreatorLinkController::class, 'store'])->name('.store');
         });
     });
 
