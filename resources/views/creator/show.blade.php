@@ -4,7 +4,8 @@
         class="flex-none w-full sm:sticky top-0 h-min bg-white sm:w-64 flex flex-col items-center rounded-b-md drop-shadow-md">
         <div class="pt-6 px-8 sticky w-64 rounded-b-md drop-shadow-md">
             <img src="{{Storage::temporaryUrl($creator->avatar_path, now()->addHour(1))}}"
-                 class="rounded-xl bg-[url('{{config('app.url')}}/images/avatar.webp')]"/>
+                 style="background-image: url('{{config('app.url')}}/images/avatar.webp')"
+                 class="rounded-xl aspect-square bg-cover"/>
             <h2 class="text-center pt-4 text-2xl font-medium">{{$creator->name}}</h2>
 
             <div
