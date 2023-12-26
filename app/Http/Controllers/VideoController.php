@@ -4,12 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Creator;
 use App\Models\Video;
-use App\Models\VideoVersion;
-use getID3;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-use Intervention\Image\Facades\Image;
 
 class VideoController extends Controller
 {
@@ -23,12 +18,12 @@ class VideoController extends Controller
 
     public function show(Request $request, Video $video, ?string $language = null)
     {
-        $source = $video->getVideoVersion($language);
-        if (! $source) {
+        $version = $video->getVideoVersion($language);
+        if (! $version) {
             return to_route('video.show', compact('video'));
         }
 
-        return view('videos.show', compact('video', 'source'));
+        return view('videos.show', compact('video', 'version'));
     }
 
     public function create(Request $request)
@@ -44,28 +39,12 @@ class VideoController extends Controller
 
         $video = new Video();
         $video->title = $validated['title'];
-        $video->release_date = $validated['release_date'];
         $video->creator_id = $validated['creator_id'];
         $video->language = strtolower($validated['language']);
         $video->save();
 
-        $thumbnail = Image::make($validated['thumbnail'])->resize(800, 450)->encode('webp', 75)->stream();
-        $thumbnailPath = 'thumbnails/'.Str::ulid().'.webp';
-        Storage::put($thumbnailPath, $thumbnail->__toString());
+        VideoVersionController::save($video, $validated['thumbnail'], $validated['video'], $validated['release_date']);
 
-        $getID3 = new getID3();
-        $videoInfo = $getID3->analyze($validated['video']);
-
-        $videoPath = Storage::put('videos', $validated['video']);
-
-        $videoVersion = new VideoVersion();
-        $videoVersion->video_id = $video->id;
-        $videoVersion->language = $video->language;
-        $videoVersion->source_path = $videoPath;
-        $videoVersion->thumbnail_path = $thumbnailPath;
-        $videoVersion->duration = (int) $videoInfo['playtime_seconds'];
-        $videoVersion->save();
-
-        return redirect()->route('video.show', ['video' => $video->id])->with('success', 'Video created successfully');
+        return redirect()->route('video.show', ['video' => $video->id])->with('success', 'Video added successfully');
     }
 }

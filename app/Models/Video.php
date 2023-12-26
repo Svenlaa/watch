@@ -24,8 +24,10 @@ class Video extends Model
         return $this->hasMany(VideoVersion::class, 'video_id');
     }
 
-    public function getVideoVersion(?string $language = null): ?VideoVersion
+    public function getVideoVersion(?string $language = null): VideoVersion|Model|null
     {
-        return $this->videoVersions()->firstWhere('language', $language ?? $this->language);
+        $versions = $this->videoVersions;
+
+        return $versions->firstWhere('language', $language ?? $this->language) ?: $versions->firstWhere('language', $this->language) ?: $versions->first();
     }
 }

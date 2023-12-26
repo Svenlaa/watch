@@ -3,7 +3,7 @@
 
     <div class="grid justify-items-center grid-cols-[repeat(auto-fill,minmax(18rem,_1fr))] py-4">
         @foreach($videos as $video)
-            @php($source = $video->getVideoVersion())
+            @php($source = $video->getVideoVersion(request()->get('preferred-language')))
             <a href="{{route('video.show', $video->id)}}"
                class="flex flex-col w-72 p-2 m-4 hover:bg-primary-50 rounded-lg">
                 <img style="background-image: url('{{config('app.url')}}/images/thumbnail.webp')"
@@ -16,7 +16,7 @@
 
     <button @click="modalOpen = !modalOpen; $nextTick(() => $(`input[name='title']`).focus())"
             class="fixed bottom-8 right-12 bg-primary-600 hover:bg-primary-700 rounded-full text-white font-bold text-3xl p-2 leading-4"
-            title="Create New Video" type="button">
+            title="Add Video" type="button">
         <iconify-icon icon="streamline:add-1-solid"/>
     </button>
 
@@ -93,7 +93,7 @@
                         <div class="bg-gray-50 py-3 px-4 flex flex-row-reverse gap-4">
                             <button type="submit"
                                     class="bg-primary-600 text-white rounded-sm px-2 py-1 hover:bg-primary-700">
-                                Create Video
+                                Add Video
                             </button>
                             <button type="button" @click="modalOpen = false"
                                     class="rounded-sm px-2 py-1 hover:bg-gray-100">
