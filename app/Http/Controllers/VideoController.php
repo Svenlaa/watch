@@ -36,7 +36,7 @@ class VideoController extends Controller
         $video->title = $validated['title'];
         $video->release_date = $validated['release_date'];
         $video->creator_id = $validated['creator_id'];
-        $video->language = $validated['language'];
+        $video->language = strtolower($validated['language']);
         $video->save();
 
         return redirect()->route('video.show', ['video' => $video->id])->with('success', 'Video created successfully');
