@@ -3,13 +3,12 @@
 
     <div class="grid justify-items-center grid-cols-[repeat(auto-fill,minmax(18rem,_1fr))] py-4 ">
         @foreach($videos as $video)
+            @php($source = $video->getVideoSource())
             <a href="{{route('video.show', $video->id)}}"
                class="flex flex-col w-72 p-2 m-4 hover:bg-primary-50 rounded-lg">
-                <img
-                    style="background-image: url('{{config('app.url')}}/images/thumbnail.webp')"
-                    class="rounded-md bg-cover w-full aspect-video"
-                    src="{{ $video->thumbnail_path ? Storage::temporaryUrl($video->thumbnail_path, now()->addHour(1)) : ''}}"
-                    alt="Thumbnail for {{$video->title}}">
+                <img style="background-image: url('{{config('app.url')}}/images/thumbnail.webp')"
+                     class="rounded-md bg-cover w-full aspect-video" alt="Thumbnail for {{$video->title}}"
+                     src="{{ $source?->thumbnail_path ? Storage::temporaryUrl($source->thumbnail_path, now()->addHour(1)) : ''}}"
                 <h3 class="text-center text-lg mt-2">{{$video->title}}</h3>
             </a>
         @endforeach
@@ -69,10 +68,26 @@
                                         class="mt-1 block w-full p-2 border border-gray-300 rounded-md @error('language') border-red-500 @enderror">
                                     @foreach($creators as $creator)
                                         <option
-                                            value="{{$creator->id}}" {{old('creator_id') == $creator->id ? 'selected' : ''}} >{{$creator->name}}</option>
+                                                value="{{$creator->id}}" {{old('creator_id') == $creator->id ? 'selected' : ''}} >{{$creator->name}}</option>
                                     @endforeach
                                 </select>
                                 @error('creator_id')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
+                            </div>
+
+                            <div class="mt-4 first:mt-0">
+                                <label for="inputThumbnail"
+                                       class="block text-sm font-medium text-gray-700">Thumbnail:</label>
+                                <input type="file" id="inputThumbnail" name="thumbnail"
+                                       class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md @error('thumbnail') border-red-500 @enderror">
+                                @error('thumbnail')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
+                            </div>
+
+                            <div class="mt-4 first:mt-0">
+                                <label for="inputVideo"
+                                       class="block text-sm font-medium text-gray-700">Video:</label>
+                                <input type="file" id="inputVideo" name="video"
+                                       class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md @error('video') border-red-500 @enderror">
+                                @error('video')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
                             </div>
                         </div>
                         <div class="bg-gray-50 py-3 px-4 flex flex-row-reverse gap-4">
