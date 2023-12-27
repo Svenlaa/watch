@@ -8,7 +8,7 @@
                class="flex flex-col w-72 p-2 m-4 hover:bg-primary-50 rounded-lg">
                 <img style="background-image: url('{{config('app.url')}}/images/thumbnail.webp')"
                      class="rounded-md bg-cover w-full aspect-video" alt="Thumbnail for {{$video->title}}"
-                     src="{{ $source?->thumbnail_path ? Storage::temporaryUrl($source->thumbnail_path, now()->addHour(1)) : ''}}"
+                     src="{{ $source?->thumbnail_path ? Storage::temporaryUrl($source->thumbnail_path, now()->addHour(1)) : ''}}"/>
                 <h3 class="text-center text-lg mt-2">{{$video->title}}</h3>
             </a>
         @endforeach
