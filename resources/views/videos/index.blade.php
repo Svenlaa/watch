@@ -35,31 +35,9 @@
                             <h2 id="modal-headline" class="text-lg">Add Video</h2>
                         </div>
                         <div class="bg-white px-4 py-4 sm:p-6 sm:pb-4">
-
-                            <div class="mt-4 first:mt-0">
-                                <label for="inputTitle" class="block text-sm font-medium text-gray-700">Title:</label>
-                                <input id="inputTitle" type="text" name="title" value="{{old('title') ?? ''}}"
-                                       class="mt-1 block w-full p-2 border border-gray-300 rounded-md @error('title') border-red-500 @enderror">
-                                @error('title')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
-                            </div>
-
-                            <div class="mt-4 first:mt-0">
-                                <label for="releaseDateInput"
-                                       class="block text-sm font-medium text-gray-700">Release Date:</label>
-                                <input id="releaseDateInput" type="date" name="release_date"
-                                       value="{{old('release_date') ?? ''}}"
-                                       class="mt-1 block w-full p-2 border border-gray-300 rounded-md @error('release_date') border-red-500 @enderror">
-                                @error('release_date')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
-                            </div>
-
-                            <div class="mt-4 first:mt-0">
-                                <label for="languageInput"
-                                       class="block text-sm font-medium text-gray-700">Language:</label>
-                                <input id="languageInput" type="text" name="language" maxlength="2"
-                                       value="{{old('language') ?? ''}}"
-                                       class="mt-1 block w-full p-2 border border-gray-300 rounded-md @error('language') border-red-500 @enderror">
-                                @error('language')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
-                            </div>
+                            <x-input type="text" name="title"/>
+                            <x-input type="date" name="release_date"/>
+                            <x-input type="text" name="language" maxlength="2"/>
 
                             <div class="mt-4 first:mt-0">
                                 <label for="creatorInput"
@@ -74,21 +52,8 @@
                                 @error('creator_id')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
                             </div>
 
-                            <div class="mt-4 first:mt-0">
-                                <label for="inputThumbnail"
-                                       class="block text-sm font-medium text-gray-700">Thumbnail:</label>
-                                <input type="file" id="inputThumbnail" name="thumbnail"
-                                       class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md @error('thumbnail') border-red-500 @enderror">
-                                @error('thumbnail')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
-                            </div>
-
-                            <div class="mt-4 first:mt-0">
-                                <label for="inputVideo"
-                                       class="block text-sm font-medium text-gray-700">Video:</label>
-                                <input type="file" id="inputVideo" name="video"
-                                       class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md @error('video') border-red-500 @enderror">
-                                @error('video')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
-                            </div>
+                            <x-input type="file" name="thumbnail"/>
+                            <x-input type="file" name="video"/>
                         </div>
                         <div class="bg-gray-50 py-3 px-4 flex flex-row-reverse gap-4">
                             <button type="submit"

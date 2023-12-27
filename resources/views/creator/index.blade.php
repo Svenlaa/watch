@@ -33,20 +33,8 @@
                             <h2 id="modal-headline" class="text-lg">Add Creator</h2>
                         </div>
                         <div class="bg-white px-4 py-4 sm:p-6 sm:pb-4">
-
-                            <div class="mt-4 first:mt-0">
-                                <label for="inputName" class="block text-sm font-medium text-gray-700">Name:</label>
-                                <input type="text" name="name" value="{{old('name') ?? ''}}"
-                                       class="mt-1 block w-full p-2 border border-gray-300 rounded-md @error('name') border-red-500 @enderror">
-                                @error('name')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
-                            </div>
-
-                            <div class="mt-4 first:mt-0">
-                                <label for="inputAvatar" class="block text-sm font-medium text-gray-700">Avatar:</label>
-                                <input type="file" id="inputAvatar" name="avatar"
-                                       class="mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md @error('avatar') border-red-500 @enderror">
-                                @error('avatar')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
-                            </div>
+                            <x-input type="text" name="name"/>
+                            <x-input type="file" name="avatar"/>
                         </div>
                         <div class="bg-gray-50 py-3 px-4 flex flex-row-reverse gap-4">
                             <button type="submit"

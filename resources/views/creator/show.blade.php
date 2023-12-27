@@ -14,7 +14,7 @@
                 @endforeach
                 <button @click="modalOpen = !modalOpen; $nextTick(() => $(`input[name='name']`).focus())"
                         class="bg-[#0003] text-black rounded-sm p-[0.25ch] w-[1.8ch] h-[1.5ch]"
-                        title="Create Creator Link">
+                        title="Add Creator Link">
                     +
                 </button>
             </div>
@@ -48,40 +48,15 @@
                             <h2 id="modal-headline" class="text-lg">Add Creator Link</h2>
                         </div>
                         <div class="bg-white px-4 py-4 sm:p-6 sm:pb-4">
-                            <div class="mt-4 first:mt-0">
-                                <label for="inputName" class="block text-sm font-medium text-gray-700">Name:</label>
-                                <input type="text" name="name" value="{{old('name') ?? ''}}"
-                                       class="mt-1 block w-full p-2 border border-gray-300 rounded-md @error('name') border-red-500 @enderror">
-                                @error('name')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
-                            </div>
-
-                            <div class="mt-4 first:mt-0">
-                                <label for="inputTarget" class="block text-sm font-medium text-gray-700">Target:</label>
-                                <input type="text" name="target" value="{{old('target') ?? ''}}"
-                                       class="mt-1 block w-full p-2 border border-gray-300 rounded-md @error('target') border-red-500 @enderror">
-                                @error('target')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
-                            </div>
-
-                            <div class="mt-4 first:mt-0">
-                                <label for="inputLetter" class="block text-sm font-medium text-gray-700">Letter:</label>
-                                <input type="text" name="letter" value="{{old('letter') ?? ''}}" maxlength="1"
-                                       class="mt-1 block w-full p-2 border border-gray-300 rounded-md @error('letter') border-red-500 @enderror">
-                                @error('letter')<span class="text-red-600 text-xs">{{ $message }}</span>@enderror
-                            </div>
-
-                            <div class="mt-4 first:mt-0">
-                                <label for="inputColor" class="block text-sm font-medium text-gray-700">Color:</label>
-                                <input type="color" name="background_color_hex"
-                                       value="{{old('background_color_hex') ?? ''}}"
-                                       class="mt-1 block w-full p-2 border border-gray-300 rounded-md @error('background_color_hex') border-red-500 @enderror">
-                                @error('background_color_hex')<span
-                                    class="text-red-600 text-xs">{{ $message }}</span>@enderror
-                            </div>
+                            <x-input type="text" name="name"/>
+                            <x-input type="text" name="target"/>
+                            <x-input type="text" maxlength="1" name="letter"/>
+                            <x-input type="color" name="background_color_hex" label="color"/>
                         </div>
                         <div class="bg-gray-50 py-3 px-4 flex flex-row-reverse gap-4">
                             <button type="submit"
                                     class="bg-primary-600 text-white rounded-sm px-2 py-1 hover:bg-primary-700">
-                                Create Creator Link
+                                Add Creator Link
                             </button>
                             <button type="button" @click="modalOpen = false"
                                     class="rounded-sm px-2 py-1 hover:bg-gray-100">
