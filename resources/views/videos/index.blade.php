@@ -43,7 +43,7 @@
                                 <label for="creatorInput"
                                        class="block text-sm font-medium text-gray-700">Creator:</label>
                                 <select id="creatorInput" name="creator_id"
-                                        class="mt-1 block w-full p-2 border border-gray-300 rounded-md @error('language') border-red-500 @enderror">
+                                        class="mt-1 block w-full p-2 border {{$errors->get('language') ? 'border-red-500':'border-gray-300'}} rounded-md">
                                     @foreach($creators as $creator)
                                         <option
                                             value="{{$creator->id}}" {{old('creator_id') == $creator->id ? 'selected' : ''}} >{{$creator->name}}</option>
