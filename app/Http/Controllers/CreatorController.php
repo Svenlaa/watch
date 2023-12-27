@@ -19,6 +19,8 @@ class CreatorController extends Controller
 
     public function show(Request $request, Creator $creator)
     {
+        $creator->loadMissing('videos.videoVersions');
+
         return view('creator.show', compact('creator'));
     }
 
