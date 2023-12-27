@@ -23,7 +23,7 @@
     </div>
     <div class="w-full grid justify-items-center grid-cols-[repeat(auto-fill,minmax(18rem,_1fr))]">
         @foreach($creator->videos as $video)
-            @php($version = $video->getVideoVersion())
+            @php($version = $video->getVideoVersion(request()->get('preferred-language')))
             <a href="{{route('video.show', $video->id)}}"
                class="flex flex-col w-72 p-2 m-4 hover:bg-primary-50 rounded-lg">
                 <img style="background-image: url('{{config('app.url')}}/images/thumbnail.webp')"
