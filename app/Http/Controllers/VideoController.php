@@ -43,7 +43,7 @@ class VideoController extends Controller
         $video->language = strtolower($validated['language']);
         $video->save();
 
-        VideoVersionController::save($video, $validated['thumbnail'], $validated['video'], $validated['release_date']);
+        VideoVersionController::save($video, $validated['thumbnail'], $validated['video'], $validated['release_date'], null);
 
         return redirect()->route('video.show', ['video' => $video->id])->with('success', 'Video added successfully');
     }

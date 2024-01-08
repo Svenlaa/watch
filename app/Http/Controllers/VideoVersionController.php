@@ -22,15 +22,17 @@ class VideoVersionController extends Controller
             'release_date' => 'required|date',
         ]);
 
-        $video->language = $validated['language'];
-        self::save($video, $validated['thumbnail'], $validated['video'], $validated['release_date']);
+        $update = [
+            'language' => $request->has('update_video_language'),
+        ];
 
-        return to_route('video', ['video' => $video, 'language' => $video->language]);
+        self::save($video, $validated['thumbnail'] ?? null, $validated['video'], $validated['release_date'], $validated['language'], $update);
+
+        return to_route('video.show', ['video' => $video, 'language' => $validated['language']]);
     }
 
-    public static function save(Video $video, UploadedFile $vThumbnail, UploadedFile $vVideo, string $vReleaseDate)
+    public static function save(Video $video, ?UploadedFile $vThumbnail, UploadedFile $vVideo, string $vReleaseDate, ?string $vLanguage, array $vUpdate = [])
     {
-
         dump($vThumbnail, $vVideo, $vReleaseDate);
         $thumbnail = Image::make($vThumbnail)->resize(800, 450)->encode('webp', 75)->stream();
         $thumbnailPath = 'thumbnails/'.Str::ulid().'.webp';
@@ -43,11 +45,23 @@ class VideoVersionController extends Controller
 
         $videoVersion = new VideoVersion();
         $videoVersion->video_id = $video->id;
-        $videoVersion->language = $video->language;
+        $videoVersion->language = $vLanguage ?? $video->language;
         $videoVersion->release_date = $vReleaseDate;
         $videoVersion->source_path = $videoPath;
         $videoVersion->thumbnail_path = $thumbnailPath;
         $videoVersion->duration = (int) $videoInfo['playtime_seconds'];
         $videoVersion->save();
+
+        foreach ($vUpdate as $k => $v) {
+            if ($v) {
+                if (array_key_exists($k, $video->toArray()) && array_key_exists($k, $videoVersion->toArray())) {
+                    $video[$k] = $videoVersion[$k];
+                }
+            }
+        }
+
+        if ($video->isDirty()) {
+            $video->save();
+        }
     }
 }

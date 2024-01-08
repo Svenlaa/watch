@@ -30,6 +30,7 @@
     <x-form-modal :action="route('video.version.create', $video)" button-text="Add Version">
         <x-input type="date" name="release_date"/>
         <x-input type="text" maxlength="2" name="language"/>
+        <x-input inline type="checkbox" name="update_video_language" label="Set as video language"/>
         <x-input type="file" name="thumbnail"/>
         <x-input type="file" name="video"/>
     </x-form-modal>
