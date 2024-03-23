@@ -1,11 +1,11 @@
-php artisan down --render="errors::503"
+php artisan down --render="errors::503" || (composer install --optimize-autoloader -no && php artisan down --render="errors::503") || exit
 
 git reset --hard origin/master
 git pull
 VERSION=$(git rev-parse --short HEAD)
 sed -i~ /^APP_VERSION=/s/=.*/="${VERSION}"/ .env
 
-composer install --optimize-autoloader -no || exit
+composer install --optimize-autoloader -no
 php artisan migrate --force
 
 pnpm i -g pnpm
