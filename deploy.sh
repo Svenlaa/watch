@@ -5,7 +5,7 @@ git pull
 VERSION=$(git rev-parse --short HEAD)
 sed -i~ /^APP_VERSION=/s/=.*/="${VERSION}"/ .env
 
-composer install --optimize-autoloader -no
+composer install --optimize-autoloader -no || exit
 php artisan migrate --force
 
 pnpm i -g pnpm
